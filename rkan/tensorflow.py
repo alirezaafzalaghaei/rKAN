@@ -69,6 +69,36 @@ class JacobiRKAN(Layer):
         return self.rational_jacobi_polynomial(
             inputs, self.degree, normalized_alpha, normalized_beta, 1, normalized_iota, backend=tf
         )
+    def get_config(self):
+        """
+        Returns the layer configuration.
+
+        This method is used to serialize the layer during saving and
+        deserialization during loading.
+
+        Returns:
+            dict: Configuration dictionary of the layer.
+        """
+        config = super(JacobiRKAN, self).get_config()
+        config.update({
+            'degree': self.degree
+        })
+        return config
+
+    @classmethod
+    def from_config(cls, config):
+        """
+        Instantiates a layer from a configuration dictionary.
+
+        Args:
+            config (dict): Configuration dictionary of the layer.
+
+        Returns:
+            PadeRKAN: Instantiated PadeRKAN layer.
+        """
+        config = config.copy()
+        layer = cls(degree=config.pop('degree'), **config)
+        return layer
 
 
 
@@ -197,3 +227,34 @@ class PadeRKAN(Layer):
 
         return p / q
 
+    def get_config(self):
+        """
+        Returns the layer configuration.
+
+        This method is used to serialize the layer during saving and
+        deserialization during loading.
+
+        Returns:
+            dict: Configuration dictionary of the layer.
+        """
+        config = super(PadeRKAN, self).get_config()
+        config.update({
+            'degree_p': self.degree_p,
+            'degree_q': self.degree_q,
+        })
+        return config
+
+    @classmethod
+    def from_config(cls, config):
+        """
+        Instantiates a layer from a configuration dictionary.
+
+        Args:
+            config (dict): Configuration dictionary of the layer.
+
+        Returns:
+            PadeRKAN: Instantiated PadeRKAN layer.
+        """
+        config = config.copy()
+        layer = cls(degree_p=config.pop('degree_p'), degree_q=config.pop('degree_q'), **config)
+        return layer

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='rkan',
-    version='0.0.2',
+    version='0.0.3',
     packages=["rkan"],
     description="Rational Kolmogorov-Arnold Network (rKAN)",
     author='Alireza Afzal Aghaei',
